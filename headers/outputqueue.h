@@ -1,3 +1,4 @@
+#pragma once
 #include <queue>
 #include "messagequeue.h"
 #include "message.h"
