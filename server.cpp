@@ -17,9 +17,11 @@ std::set<int> clients;
 #include <future>
 #include <mutex>
 #include <condition_variable>
+#include <cassert>
 #include "headers/clients.h"
 #include "headers/outputqueue.h"
 #include "headers/receiver.h" 
+
 void setNonBlocking( int socket ){
 	
 	int flags;

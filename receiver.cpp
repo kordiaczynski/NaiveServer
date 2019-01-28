@@ -3,6 +3,7 @@
 #include "headers/outputqueue.h"
 #include "headers/clients.h"
 #include <future>
+#include <cstring>
 
 namespace NaiveServer
 {
