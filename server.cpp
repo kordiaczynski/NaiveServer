@@ -17,9 +17,9 @@ std::set<int> clients;
 #include <future>
 #include <mutex>
 #include <condition_variable>
-#include "clients.h"
-#include "outputqueue.h"
-#include "receiver.h" 
+#include "headers/clients.h"
+#include "headers/outputqueue.h"
+#include "headers/receiver.h" 
 void setNonBlocking( int socket ){
 	
 	int flags;

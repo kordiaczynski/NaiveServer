@@ -1,7 +1,7 @@
 
-#include "receiver.h"
-#include "outputqueue.h"
-#include "clients.h"
+#include "headers/receiver.h"
+#include "headers/outputqueue.h"
+#include "headers/clients.h"
 #include <future>
 
 namespace NaiveServer
