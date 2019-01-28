@@ -19,7 +19,7 @@ std::set<int> clients;
 #include <condition_variable>
 #include "clients.h"
 #include "outputqueue.h"
- 
+#include "receiver.h" 
 void setNonBlocking( int socket ){
 	
 	int flags;
@@ -28,52 +28,6 @@ void setNonBlocking( int socket ){
 	fcntl(socket,F_SETFL, flags | O_NONBLOCK );
 	
 }
-
-void Receiver( Clients & _rclients )
-{
-
-	fd_set read_flags, write_flags;
-	struct timeval waitd = {10, 0};          // the max wait time for an event
-    	int sel;       
-	
-	while(true)
-	{
-		int client = _rclients.getNext();
-		
-		std::this_thread::sleep_for(std::chrono::milliseconds(250));
- 		if( client != 0 ){
-			FD_ZERO(&read_flags);
-       			FD_ZERO(&write_flags);
-        		FD_SET(client, &read_flags);
-        		FD_SET(client, &write_flags);
-
-			sel = select( client+1, &read_flags, &write_flags, (fd_set*)0, &waitd );
-			if( sel > 0 ){
-				std::cout << "Sel is: " << sel << std::endl;
-				if( FD_ISSET(client,&read_flags)){
-			
-					FD_CLR(client,&read_flags);
-					std::cout << "Client " << client << " says: " << std::endl;			
-					char in[255];
-			 		memset(&in, 0, 255);
-
-		         		recv(client, in, 255, 0);
-
-					std::cout << std::endl;
-					std::cout << in;
-					std::cout << std::endl; 
-				}
-			}
-
-	
-
-		}
-
-
-	}
-};
-
-//void sendMessages(
 
 int main(){
 
@@ -115,9 +69,12 @@ int main(){
 
 	int client = 0;	
 
+	using namespace NaiveServer;
+
 	Clients cl;
-	
-	std::future<void> fut = std::async(std::launch::async, Receiver , std::ref(cl));
+	Receiver receiver;
+		
+	std::future<void> fut = std::async(std::launch::async, receiver , std::ref(cl));
 	while( true )
 	{
 		sockaddr_in clientAddr;
