@@ -35,7 +35,10 @@ namespace NaiveServer
 "\"body\": \"CIALO\""
 "}\n";
 		
-		public:
+	
+
+
+	public:
 			void operator()( Clients & _rclients );
 	};
 }

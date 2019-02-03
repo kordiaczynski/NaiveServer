@@ -21,7 +21,7 @@ std::set<int> clients;
 #include "headers/clients.h"
 #include "headers/outputqueue.h"
 #include "headers/receiver.h" 
-
+#include "headers/connection.h"
 void setNonBlocking( int socket ){
 	
 	int flags;
@@ -38,7 +38,7 @@ int main(){
 	
 	sockaddr_in serverAddr;
 	unsigned int sizeofAdress = sizeof( serverAddr );
-
+/*
 	if(( serverfd = socket( AF_INET, SOCK_STREAM, 0 )) == 0) {
 		std::cout << "Unable to create socket";	
 		return -1;
@@ -68,10 +68,15 @@ int main(){
 		std::cout << "Listen";
 		return -1;
 	}
-
-	int client = 0;	
+*/
 
 	using namespace NaiveServer;
+	Connection con( Connection::TCP );
+
+	con.CreateAndListenOnPort(8082);
+	serverfd = con.GetFd();
+	int client = 0;	
+
 
 	Clients cl;
 	Receiver receiver;
