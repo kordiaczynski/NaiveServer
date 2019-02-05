@@ -31,51 +31,29 @@ void setNonBlocking( int socket ){
 	
 }
 
-int main(){
+int main( int argn, char *argc[]){
+
+	
+	unsigned int port = 8082;
+	if( argn > 1 )
+	{
+		sscanf( argc[1], "%u", &port );		
+	}
+
+
+
 
 	int serverfd = 0;
-	int opt = 1;
+	int opt = 1;	
+	int client = 0;
 	
 	sockaddr_in serverAddr;
 	unsigned int sizeofAdress = sizeof( serverAddr );
-/*
-	if(( serverfd = socket( AF_INET, SOCK_STREAM, 0 )) == 0) {
-		std::cout << "Unable to create socket";	
-		return -1;
-	}
-
-	
-	
-	if( setsockopt( serverfd, SOL_SOCKET, SO_REUSEADDR, &opt,sizeof(opt)) != 0 ){
-		std::cout << "Unable to set options" << errno;
-		return -1;
-	}
-	
-	serverAddr.sin_family = AF_INET;
-	serverAddr.sin_addr.s_addr = INADDR_ANY;
-	serverAddr.sin_port = htons( uiPort );
-	
-	
-	if( bind( serverfd,(sockaddr*) &serverAddr, sizeofAdress ) )
-	{
-		std::cout << "Unable to bind";
-		return -1;
-	}
-
-
-	if( listen( serverfd, 3) )
-	{
-		std::cout << "Listen";
-		return -1;
-	}
-*/
-
 	using namespace NaiveServer;
-	Connection con( Connection::TCP );
 
-	con.CreateAndListenOnPort(8082);
+	Connection con( Connection::TCP );
+	con.CreateAndListenOnPort( port );
 	serverfd = con.GetFd();
-	int client = 0;	
 
 
 	Clients cl;
