@@ -6,7 +6,7 @@
 #include <cstring>
 
 #include <chrono>
-
+#include <unistd.h>
 
 
 namespace std {
@@ -54,6 +54,12 @@ void Receiver::operator()( Clients & _rclients ){
 			 		memset(&in, 0, sizeof(in));
 
 		         		recv(client, in, sizeof(in), 0);
+					if(strlen( in ) == 0 ){
+						_rclients.remove( client );
+						close(client);
+						std::cout << "Removed: " << client << std::endl;
+						continue;
+					}
 					output.AddMessage( NaiveServer::Message( client, m_fixedMessage ));
 					std::cout << std::endl;
 					std::cout << in;

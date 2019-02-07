@@ -44,6 +44,13 @@ bool Connection::CreateAndListenOnPort( unsigned int port ){
 	serverFd = socket(family, type,0);
 	if( serverFd == 0 ){
 		m_error = ErCreateSocket;						
+	} else {
+		int opt = 1;
+		if( setsockopt( serverFd, SOL_SOCKET, SO_REUSEPORT,&opt, sizeof( opt)) != 0 )
+		{
+			m_error = ErCreateSocket;
+		}
+
 	}
 	if( m_error == ErNone ){
 		if( BindOnPort( port ) == false ){

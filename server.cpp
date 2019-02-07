@@ -40,9 +40,6 @@ int main( int argn, char *argc[]){
 		sscanf( argc[1], "%u", &port );		
 	}
 
-
-
-
 	int serverfd = 0;
 	int opt = 1;	
 	int client = 0;
@@ -67,6 +64,9 @@ int main( int argn, char *argc[]){
 		cl.add(client);
 					
 	}
+
+	std::cout << "Closing" << std::endl;
+
  return 0;
 };
 
